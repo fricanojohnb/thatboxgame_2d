@@ -12,7 +12,7 @@ public class YWallMovement : MonoBehaviour
     void OnMouseDown()
     {
         offset = gameObject.transform.position -
-        Camera.main.ScreenToWorldPoint(new Vector3(0f, Input.mousePosition.y));    
+        Camera.main.ScreenToWorldPoint(new Vector3(0f, Input.mousePosition.y, 0f));    
         mouseClicked = true;
     }
 

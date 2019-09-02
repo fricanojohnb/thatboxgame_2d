@@ -12,7 +12,7 @@ public class XWallMovement : MonoBehaviour
     void OnMouseDown()
     {
         offset = gameObject.transform.position -
-        Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, 0f));
+        Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, 0f, 0f));
         mouseClicked = true;
     }
 

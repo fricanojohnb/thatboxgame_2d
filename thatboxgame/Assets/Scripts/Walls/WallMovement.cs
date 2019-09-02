@@ -11,20 +11,28 @@ public class WallMovement : MonoBehaviour
 
     void OnMouseDown()
     {
-        offset = gameObject.transform.position -
-        Camera.main.ScreenToWorldPoint(new Vector3(Mathf.Round(Input.mousePosition.x), Mathf.Round(Input.mousePosition.y)));
+        if (xWall)
+        {
+            offset = gameObject.transform.position -
+            Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, 0f));
+        }
+        else if (yWall)
+        {
+            offset = gameObject.transform.position -
+            Camera.main.ScreenToWorldPoint(new Vector3(0f, Input.mousePosition.y));    
+        }
     }
 
     void OnMouseDrag()
     {
         if (xWall)
         {
-            Vector3 newPosition = new Vector3(Mathf.Round(Input.mousePosition.x), gameObject.transform.position.y);
+            Vector3 newPosition = new Vector3(Input.mousePosition.x, 0);
             transform.position = Camera.main.ScreenToWorldPoint(newPosition) + offset;
         }
         else if (yWall)
         {
-            Vector3 newPosition = new Vector3(gameObject.transform.position.x, Mathf.Round(Input.mousePosition.y));
+            Vector3 newPosition = new Vector3(0, Input.mousePosition.y);
             transform.position = Camera.main.ScreenToWorldPoint(newPosition) + offset;
         }
     }

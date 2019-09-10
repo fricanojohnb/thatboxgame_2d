@@ -4,36 +4,33 @@ using UnityEngine;
 
 public class YWallMovement : MonoBehaviour
 {
-    private Vector3 offset;
-    public int slideDistance = 0;
-    private bool mouseClicked = false;
-    private bool isColliding = false;
+    private bool moving;
 
-    void OnMouseDown()
-    {
-        offset = gameObject.transform.position -
-        Camera.main.ScreenToWorldPoint(new Vector3(0f, Input.mousePosition.y, 0f));    
-        mouseClicked = true;
+    public Vector2 direction;
+
+    private void Start() {
+        moving = false;
     }
 
-    private void OnMouseUp() {
-        mouseClicked = false;
+    void OnMouseDown(){
+        moving = true;
     }
 
-    private void Update()
-    {
-        if (!isColliding && mouseClicked){
-            Vector3 newPosition = new Vector3(0, Input.mousePosition.y);
-            transform.position = Camera.main.ScreenToWorldPoint(newPosition) + offset;
+    private void Update(){
+        if (moving){
+            Vector3 newPosition = new Vector3(Input.mousePosition.x, 0);
+            transform.Translate(direction);
         }
     }
-    
-    private void OnCollisionEnter2D(Collision2D other) {      
-        isColliding = true;
-        transform.position = transform.position - offset;
-    }
 
-    private void OnCollisionExit2D(Collision2D other) {
-        isColliding = false;
+    private void OnTriggerEnter2D(Collider2D other) {
+        moving = !moving;
+        if (direction.Equals(Vector2.down)){
+            direction = Vector2.up;
+        }
+        else {
+            direction = Vector2.down;
+        }
+        Debug.Log("OnCollisionEnter2D");
     }
 }

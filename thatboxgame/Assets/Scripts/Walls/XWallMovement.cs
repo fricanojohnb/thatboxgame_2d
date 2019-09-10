@@ -4,39 +4,33 @@ using UnityEngine;
 
 public class XWallMovement : MonoBehaviour
 {
-    private Vector3 offset;
-    public int slideDistance = 0;
-    private bool isColliding = false;
-    private bool mouseClicked = false;
+    private bool moving;
 
-    void OnMouseDown()
-    {
-        offset = gameObject.transform.position -
-        Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, 0f, 0f));
-        mouseClicked = true;
+    public Vector2 direction;
+
+    private void Start() {
+        moving = false;
     }
 
-    private void OnMouseUp() {
-        mouseClicked = false;
+    void OnMouseDown(){
+        moving = true;
     }
 
-    private void Update()
-    {
-        if (!isColliding && mouseClicked)
-        {
+    private void Update(){
+        if (moving){
             Vector3 newPosition = new Vector3(Input.mousePosition.x, 0);
-            transform.position = Camera.main.ScreenToWorldPoint(newPosition) + offset;
+            transform.Translate(direction);
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        isColliding = true;
-        transform.position = transform.position - offset;
-    }
-
-    private void OnCollisionExit2D(Collision2D other)
-    {
-        isColliding = false;
+    private void OnTriggerEnter2D(Collider2D other) {
+        moving = !moving;
+        if (direction.Equals(Vector2.left)){
+            direction = Vector2.right;
+        }
+        else {
+            direction = Vector2.left;
+        }
+        Debug.Log("OnCollisionEnter2D");
     }
 }
